@@ -9,5 +9,3 @@ ADD ./app/ /app/app/
 ADD ./*.py /app/
 
 WORKDIR /app
-
-CMD ["python", "run_app.py"]

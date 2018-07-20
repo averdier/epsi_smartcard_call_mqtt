@@ -13,7 +13,7 @@ class Config:
     MQTT_USERNAME = os.environ.get('MQTT_USERNAME', 'call_service')
     MQTT_PASSWORD = os.environ.get('MQTT_PASSWORD', 'call_service')
     MQTT_KEEP_ALIVE = int(os.environ.get('MQTT_KEEP_ALIVE', '60'))
-    SERVICE_HOST = os.environ.get('SERVICE_HOST', '')
+    SERVICE_HOST = os.environ.get('SERVICE_HOST', 'http://iotepsi.azurewebsites.net/api/badges/')
 
 
 class DevelopmentConfig(Config):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import requests
 import paho.mqtt.client as mqtt
 from config import config
 
@@ -21,6 +22,18 @@ class App:
     def handle_sensor(self, sensor, data):
         if data['kind'] == 'card_inserted':
             self.__mqtt.publish('epsi_iot/call/from_service', 'new card inserted from sensor')
+            card_id = data['args']['id'].replace(' ', '')
+            response = requests.get(self.__config.SERVICE_HOST + card_id)
+
+            if response.status_code == 200:
+                card = response.json()
+                payload = {
+                    'kind': 'call',
+                    'recipient': card['idSkype'],
+                    'service': 'skype'
+                }
+                self.__mqtt.publish('epsi_iot/username/from_clients', json.dumps(payload))
+                print('data sent')
 
     def on_connect(self, userdata, flags, rc):
         if rc == 4:
